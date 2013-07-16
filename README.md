@@ -5,6 +5,10 @@
 Turn a *-wildcard style blob (`"*.min.js"`) into a regular expression
 (`/^.*\.min\.js$/`)!
 
+## Install
+
+    npm install blob-to-regexp
+
 ## Usage:
 
     var blobToRegExp = require('blob-to-regexp');

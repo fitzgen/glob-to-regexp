@@ -9,7 +9,7 @@ Turn a *-wildcard style blob (`"*.min.js"`) into a regular expression
 
     npm install blob-to-regexp
 
-## Usage:
+## Usage
 
     var blobToRegExp = require('blob-to-regexp');
     var re = blobToRegExp("f*uck");

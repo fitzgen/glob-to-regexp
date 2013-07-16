@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/fitzgen/blob-to-regexp.png?branch=master)](https://travis-ci.org/fitzgen/blob-to-regexp)
 
 Turn a *-wildcard style blob (`"*.min.js"`) into a regular expression
-(`/^.*\.min\.js$/`)!
+(`/^.+\.min\.js$/`)!
 
 ## Install
 

@@ -1,24 +1,24 @@
-var blobToRegexp = require("./index.js");
+var globToRegexp = require("./index.js");
 var assert = require("assert");
 
 // Match everything
-assert.ok(blobToRegexp("*").test("foo"));
+assert.ok(globToRegexp("*").test("foo"));
 
 // Match the end
-assert.ok(blobToRegexp("f*").test("foo"));
+assert.ok(globToRegexp("f*").test("foo"));
 
 // Match the start
-assert.ok(blobToRegexp("*o").test("foo"));
+assert.ok(globToRegexp("*o").test("foo"));
 
 // Match the middle
-assert.ok(blobToRegexp("f*uck").test("firetruck"));
+assert.ok(globToRegexp("f*uck").test("firetruck"));
 
-// Must match at least one character
-assert.ok(!blobToRegexp("f*uck").test("fuck"));
+// Match zero characters
+assert.ok(globToRegexp("f*uck").test("fuck"));
 
 // More complex matches
-assert.ok(blobToRegexp("*.min.js").test("http://example.com/jquery.min.js"));
-assert.ok(blobToRegexp("*.min.*").test("http://example.com/jquery.min.js"));
-assert.ok(blobToRegexp("*/js/*.js").test("http://example.com/js/jquery.min.js"));
+assert.ok(globToRegexp("*.min.js").test("http://example.com/jquery.min.js"));
+assert.ok(globToRegexp("*.min.*").test("http://example.com/jquery.min.js"));
+assert.ok(globToRegexp("*/js/*.js").test("http://example.com/js/jquery.min.js"));
 
 console.log("Ok!");

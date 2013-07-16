@@ -1,5 +1,5 @@
-module.exports = function (blob) {
-  const reStr = blob
+module.exports = function (glob) {
+  const reStr = glob
   // Escape existing regular expression syntax
     .replace(/\\/g, "\\\\")
     .replace(/\//g, "\\/")
@@ -20,6 +20,6 @@ module.exports = function (blob) {
     .replace(/\]/g, "\\]")
     .replace(/\-/g, "\\-")
   // Turn * into the match everything wildcard
-    .replace(/\*/g, ".+")
+    .replace(/\*/g, ".*")
   return new RegExp("^" + reStr + "$");
 }

@@ -1,26 +1,26 @@
-# Blob To Regular Expression
+# Glob To Regular Expression
 
-[![Build Status](https://travis-ci.org/fitzgen/blob-to-regexp.png?branch=master)](https://travis-ci.org/fitzgen/blob-to-regexp)
+[![Build Status](https://travis-ci.org/fitzgen/glob-to-regexp.png?branch=master)](https://travis-ci.org/fitzgen/glob-to-regexp)
 
-Turn a *-wildcard style blob (`"*.min.js"`) into a regular expression
-(`/^.+\.min\.js$/`)!
+Turn a *-wildcard style glob (`"*.min.js"`) into a regular expression
+(`/^.*\.min\.js$/`)!
 
 ## Install
 
-    npm install blob-to-regexp
+    npm install glob-to-regexp
 
 ## Usage
 
-    var blobToRegExp = require('blob-to-regexp');
-    var re = blobToRegExp("f*uck");
+    var globToRegExp = require('blob-to-regexp');
+    var re = globToRegExp("f*uck");
     re.test("firetruck"); // true
-    re.test("fuck"); // false
+    re.test("fuck"); // true
 
-    re = blobToRegExp("*.min.js");
+    re = globToRegExp("*.min.js");
     re.test("http://example.com/jquery.min.js"); // true
     re.test("http://example.com/jquery.min.js.map"); // false
 
-    re = blobToRegExp("*/www/*.js");
+    re = globToRegExp("*/www/*.js");
     re.test("http://example.com/www/app.js"); // true
     re.test("http://example.com/www/lib/factory-proxy-model-observer.js"); // true
 

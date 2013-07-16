@@ -11,7 +11,7 @@ Turn a *-wildcard style glob (`"*.min.js"`) into a regular expression
 
 ## Usage
 
-    var globToRegExp = require('blob-to-regexp');
+    var globToRegExp = require('glob-to-regexp');
     var re = globToRegExp("f*uck");
     re.test("firetruck"); // true
     re.test("fuck"); // true

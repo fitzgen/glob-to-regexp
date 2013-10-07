@@ -1,25 +1,39 @@
 module.exports = function (glob) {
-  const reStr = glob
-  // Escape existing regular expression syntax
-    .replace(/\\/g, "\\\\")
-    .replace(/\//g, "\\/")
-    .replace(/\^/g, "\\^")
-    .replace(/\$/g, "\\$")
-    .replace(/\+/g, "\\+")
-    .replace(/\?/g, "\\?")
-    .replace(/\./g, "\\.")
-    .replace(/\(/g, "\\(")
-    .replace(/\)/g, "\\)")
-    .replace(/\=/g, "\\=")
-    .replace(/\!/g, "\\!")
-    .replace(/\|/g, "\\|")
-    .replace(/\{/g, "\\{")
-    .replace(/\}/g, "\\}")
-    .replace(/\,/g, "\\,")
-    .replace(/\[/g, "\\[")
-    .replace(/\]/g, "\\]")
-    .replace(/\-/g, "\\-")
-  // Turn * into the match everything wildcard
-    .replace(/\*/g, ".*")
+  if (glob === null || typeof glob === "undefined") {
+    return null;
+  }
+  var str = String(glob),
+  reStr = "",
+  c;
+  
+  for (var i = 0, len = str.length; i < len; i++) {
+    c = str[i];
+    switch (c) {
+    case "\\":
+    case "/":
+    case "$":
+    case "^":
+    case "+":
+    case "?":
+    case ".":
+    case "(":
+    case ")":
+    case "=":
+    case "!":
+    case "|":
+    case "{":
+    case "}":
+    case ",":
+    case "[":
+    case "]":
+      reStr += "\\" + c;
+      break;
+    case "*":
+      reStr += ".*";
+      break;
+    default:
+      reStr += c;
+    }
+  }
   return new RegExp("^" + reStr + "$");
-}
+};

@@ -21,4 +21,6 @@ assert.ok(globToRegexp("*.min.js").test("http://example.com/jquery.min.js"));
 assert.ok(globToRegexp("*.min.*").test("http://example.com/jquery.min.js"));
 assert.ok(globToRegexp("*/js/*.js").test("http://example.com/js/jquery.min.js"));
 
+var testStr = "\\/$^+?.()=!|{},[].*"
+assert.ok(globToRegexp(testStr).test(testStr));
 console.log("Ok!");

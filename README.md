@@ -5,6 +5,10 @@
 Turn a *-wildcard style glob (`"*.min.js"`) into a regular expression
 (`/^.*\.min\.js$/`)!
 
+To match bash-like globs, eg. ? for any single-character match, [a-z]
+for character ranges, and {*.html, *.js} for multiple alternatives,
+call with extended = true.
+
 ## Install
 
     npm install glob-to-regexp
@@ -23,6 +27,11 @@ Turn a *-wildcard style glob (`"*.min.js"`) into a regular expression
     re = globToRegExp("*/www/*.js");
     re.test("http://example.com/www/app.js"); // true
     re.test("http://example.com/www/lib/factory-proxy-model-observer.js"); // true
+
+    // Extended globs
+    re = globToRegExp("*/www/{*.js,*.html}", true);
+    re.test("http://example.com/www/app.js"); // true
+    re.test("http://example.com/www/index.html"); // true
 
 ## License
 

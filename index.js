@@ -1,15 +1,26 @@
-module.exports = function (glob, extended) {
-  if (glob === null || typeof glob === "undefined") {
+module.exports = function (glob, opts) {
+  if (glob == null) {
     return null;
   }
-  if (typeof extended === "undefined") extended = false;
-  var str = String(glob),
-  reStr = "",
-  inMulti = false,
-  c;
-  
+
+  var str = String(glob);
+
+  // The regexp we are building, as a string.
+  var reStr = "";
+
+  // Whether we are matching so called "extended" globs (like bash) and should
+  // support single character matching, matching ranges of characters, group
+  // matching, etc.
+  var extended = opts ? !!opts.extended : false;
+
+  // If we are doing extended matching, this boolean is true when we are inside
+  // a group (eg {*.html,*.js}), and false otherwise.
+  var inGroup = false;
+
+  var c;
   for (var i = 0, len = str.length; i < len; i++) {
     c = str[i];
+
     switch (c) {
     case "\\":
     case "/":
@@ -24,42 +35,50 @@ module.exports = function (glob, extended) {
     case "|":
       reStr += "\\" + c;
       break;
+
     case "?":
       if (extended) {
         reStr += ".";
-	break;
+	    break;
       }
+
     case "[":
     case "]":
       if (extended) {
         reStr += c;
-	break;
+	    break;
       }
+
     case "{":
       if (extended) {
-        inMulti = true;
-	reStr += "(";
-	break;
+        inGroup = true;
+	    reStr += "(";
+	    break;
       }
+
     case "}":
       if (extended) {
-        inMulti = false;
-	reStr += ")";
-	break;
+        inGroup = false;
+	    reStr += ")";
+	    break;
       }
+
     case ",":
-      if (inMulti) {
+      if (inGroup) {
         reStr += "|";
-	break;
+	    break;
       }
       reStr += "\\" + c;
       break;
+
     case "*":
       reStr += ".*";
       break;
+
     default:
       reStr += c;
     }
   }
+
   return new RegExp("^" + reStr + "$");
 };

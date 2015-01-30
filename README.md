@@ -2,14 +2,14 @@
 
 [![Build Status](https://travis-ci.org/fitzgen/glob-to-regexp.png?branch=master)](https://travis-ci.org/fitzgen/glob-to-regexp)
 
-Turn a *-wildcard style glob (`"*.min.js"`) into a regular expression
+Turn a \*-wildcard style glob (`"*.min.js"`) into a regular expression
 (`/^.*\.min\.js$/`)!
 
 To match bash-like globs, eg. `?` for any single-character match, `[a-z]` for
 character ranges, and `{*.html, *.js}` for multiple alternatives, call with
 `{ extended: true }`.
 
-Set flags on resulting RegExp object by adding flags property to option object.
+Set flags on the resulting `RegExp` object by adding the `flags` property to the option object, eg `{ flags: "i" }` for ignoring case.
 
 ## Install
 

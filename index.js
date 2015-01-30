@@ -16,7 +16,8 @@ module.exports = function (glob, opts) {
   // If we are doing extended matching, this boolean is true when we are inside
   // a group (eg {*.html,*.js}), and false otherwise.
   var inGroup = false;
-
+  // RegExp flags (eg "i" ) to pass in to RegExp constructor.
+  var flags = opts && typeof( opts.flags ) === "string" ? opts.flags : "";
   var c;
   for (var i = 0, len = str.length; i < len; i++) {
     c = str[i];
@@ -80,5 +81,5 @@ module.exports = function (glob, opts) {
     }
   }
 
-  return new RegExp("^" + reStr + "$");
+  return new RegExp("^" + reStr + "$",flags);
 };

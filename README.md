@@ -9,6 +9,8 @@ To match bash-like globs, eg. `?` for any single-character match, `[a-z]` for
 character ranges, and `{*.html, *.js}` for multiple alternatives, call with
 `{ extended: true }`.
 
+Set flags on resulting RegExp object by adding flags property to option object.
+
 ## Install
 
     npm install glob-to-regexp

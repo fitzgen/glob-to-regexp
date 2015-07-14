@@ -81,5 +81,11 @@ module.exports = function (glob, opts) {
     }
   }
 
-  return new RegExp("^" + reStr + "$",flags);
+  // When regexp 'g' flag is specified don't
+  // constrain the regular expression with ^ & $
+  if (!flags || !~flags.indexOf('g')) {
+    reStr = "^" + reStr + "$";
+  }
+
+  return new RegExp(reStr, flags);
 };

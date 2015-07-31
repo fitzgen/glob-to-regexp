@@ -13,6 +13,17 @@ module.exports = function (glob, opts) {
   // matching, etc.
   var extended = opts ? !!opts.extended : false;
 
+  // When globstar is _false_ (default), '/foo/*' is translated a regexp like
+  // '^\/foo\/.*$' which will match any string beginning with '/foo/'
+  // When globstar is _true_, '/foo/*' is translated to regexp like
+  // '^\/foo\/[^/]*$' which will match any string beginning with '/foo/' BUT
+  // which does not have a '/' to the right of it.
+  // E.g. with '/foo/*' these will match: '/foo/bar', '/foo/bar.txt' but
+  // these will not '/foo/bar/baz', '/foo/bar/baz.txt'
+  // Lastely, when globstar is _true_, '/foo/**' is equivelant to '/foo/*' when
+  // globstar is _false_
+  var globstar = opts ? !!opts.globstar : false;
+
   // If we are doing extended matching, this boolean is true when we are inside
   // a group (eg {*.html,*.js}), and false otherwise.
   var inGroup = false;
@@ -73,7 +84,18 @@ module.exports = function (glob, opts) {
       break;
 
     case "*":
-      reStr += ".*";
+      if (!globstar) {
+        reStr += ".*";
+      } else {
+        if (str[i + 1] === "*") {
+          reStr += ".*";
+          i++; // move over second '*'
+        } else {
+          reStr += "[^/]*";
+        }
+      }
+      // move over repeated *'s
+      while(str[i + 1] === "*") i++;
       break;
 
     default:

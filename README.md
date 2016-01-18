@@ -18,9 +18,10 @@ Set flags on the resulting `RegExp` object by adding the `flags` property to the
 ## Usage
 ```js
 var globToRegExp = require('glob-to-regexp');
-var re = globToRegExp("f*uck");
-re.test("firetruck"); // true
-re.test("fuck"); // true
+var re = globToRegExp("p*uck");
+re.test("pot luck"); // true
+re.test("pluck"); // true
+re.test("puck"); // true
 
 re = globToRegExp("*.min.js");
 re.test("http://example.com/jquery.min.js"); // true

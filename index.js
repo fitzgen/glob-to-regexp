@@ -73,7 +73,15 @@ module.exports = function (glob, opts) {
       break;
 
     case "*":
-      reStr += ".*";
+      if (extended) {
+        if (str[i+1] == '*') {
+          i++; reStr += ".*";
+        } else {
+          reStr += "[^/]*";
+        }
+      } else {
+        reStr += '.*';
+      }
       break;
 
     default:

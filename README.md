@@ -9,6 +9,16 @@ To match bash-like globs, eg. `?` for any single-character match, `[a-z]` for
 character ranges, and `{*.html, *.js}` for multiple alternatives, call with
 `{ extended: true }`.
 
+To obey [globstars `**`](https://github.com/isaacs/node-glob#glob-primer) rules set option `{globstar: true}`.
+NOTE: This changes the behavior of `*` when `globstar` is `true` as shown below:
+When `{globstar: true}`: `/foo/**` will match any string that starts with `/foo/`
+like `/foo/index.htm`, `/foo/bar/baz.txt`, etc.  Also, `/foo/**/*.txt` will match
+any string that starts with `/foo/` and ends with `.txt` like `/foo/bar.txt`,
+`/foo/bar/baz.txt`, etc.
+Whereas `/foo/*` (single `*`, not a globstar) will match strings that start with
+`/foo/` like `/foo/index.htm`, `/foo/baz.txt` but will not match strings that
+contain a `/` to the right like `/foo/bar/baz.txt`, `/foo/bar/baz/qux.dat`, etc.
+
 Set flags on the resulting `RegExp` object by adding the `flags` property to the option object, eg `{ flags: "i" }` for ignoring case.
 
 ## Install

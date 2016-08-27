@@ -1,6 +1,6 @@
 module.exports = function (glob, opts) {
-  if (glob == null) {
-    return null;
+  if (typeof glob !== 'string') {
+    throw new TypeError('Expected a string');
   }
 
   var str = String(glob);

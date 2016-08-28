@@ -172,13 +172,27 @@ assertMatch("/foo/**", "/foo/bar/baz.txt", {globstar: true });
 assertMatch("/foo/*/*.txt", "/foo/bar/baz.txt", {globstar: true });
 assertMatch("/foo/**/*.txt", "/foo/bar/baz.txt", {globstar: true });
 assertMatch("/foo/**/*.txt", "/foo/bar/baz/qux.txt", {globstar: true });
+assertMatch("/foo/**/bar.txt", "/foo/bar.txt", {globstar: true });
+assertMatch("/foo/**/**/bar.txt", "/foo/bar.txt", {globstar: true });
+assertMatch("/foo/**/*/baz.txt", "/foo/bar/baz.txt", {globstar: true });
+assertMatch("/foo/**/*.txt", "/foo/bar.txt", {globstar: true });
+assertMatch("/foo/**/**/*.txt", "/foo/bar.txt", {globstar: true });
+assertMatch("/foo/**/*/*.txt", "/foo/bar/baz.txt", {globstar: true });
 assertMatch("**/*.txt", "/foo/bar/baz/qux.txt", {globstar: true });
+assertMatch("**/foo.txt", "foo.txt", {globstar: true });
+assertMatch("**/*.txt", "foo.txt", {globstar: true });
 
 assertNotMatch("/foo/*", "/foo/bar/baz.txt", {globstar: true });
 assertNotMatch("/foo/*.txt", "/foo/bar/baz.txt", {globstar: true });
 assertNotMatch("/foo/*/*.txt", "/foo/bar/baz/qux.txt", {globstar: true });
+assertNotMatch("/foo/*/bar.txt", "/foo/bar.txt", {globstar: true });
+assertNotMatch("/foo/*/*/baz.txt", "/foo/bar/baz.txt", {globstar: true });
+assertNotMatch("/foo/**.txt", "/foo/bar/baz/qux.txt", {globstar: true });
+assertNotMatch("/foo/bar**/*.txt", "/foo/bar/baz/qux.txt", {globstar: true });
+assertNotMatch("/foo/bar**", "/foo/bar/baz.txt", {globstar: true });
 assertNotMatch("**/.txt", "/foo/bar/baz/qux.txt", {globstar: true });
 assertNotMatch("*/*.txt", "/foo/bar/baz/qux.txt", {globstar: true });
+assertNotMatch("*/*.txt", "foo.txt", {globstar: true });
 
 assertNotMatch("http://foo.com/*",
                "http://foo.com/bar/baz/jquery.min.js",

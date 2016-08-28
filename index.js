@@ -27,8 +27,10 @@ module.exports = function (glob, opts) {
   // If we are doing extended matching, this boolean is true when we are inside
   // a group (eg {*.html,*.js}), and false otherwise.
   var inGroup = false;
+
   // RegExp flags (eg "i" ) to pass in to RegExp constructor.
   var flags = opts && typeof( opts.flags ) === "string" ? opts.flags : "";
+
   var c;
   for (var i = 0, len = str.length; i < len; i++) {
     c = str[i];
@@ -84,18 +86,34 @@ module.exports = function (glob, opts) {
       break;
 
     case "*":
+      // Move over all consecutive "*"'s.
+      // Also store the previous and next characters
+      var prevChar = str[i - 1];
+      var starCount = 1;
+      while(str[i + 1] === "*") {
+        starCount++;
+        i++;
+      }
+      var nextChar = str[i + 1];
+
       if (!globstar) {
+        // globstar is disabled, so treat any number of "*" as one
         reStr += ".*";
       } else {
-        if (str[i + 1] === "*") {
-          reStr += ".*";
-          i++; // move over second '*'
+        // globstar is enabled, so determine if this is a globstar segment
+        var isGlobstar = starCount > 1                      // multiple "*"'s
+          && (prevChar === "/" || prevChar === undefined)   // from the start of the segment
+          && (nextChar === "/" || nextChar === undefined)   // to the end of the segment
+
+        if (isGlobstar) {
+          // it's a globstar, so match zero or more path segments
+          reStr += "(?:[^/]*(?:\/|$))*";
+          i++; // move over the "/"
         } else {
+          // it's not a globstar, so only match one path segment
           reStr += "[^/]*";
         }
       }
-      // move over repeated *'s
-      while(str[i + 1] === "*") i++;
       break;
 
     default:

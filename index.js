@@ -36,7 +36,6 @@ module.exports = function (glob, opts) {
     c = str[i];
 
     switch (c) {
-    case "\\":
     case "/":
     case "$":
     case "^":

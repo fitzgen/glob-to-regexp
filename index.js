@@ -101,7 +101,7 @@ module.exports = function (glob, opts) {
 
       if (!globstar) {
         // globstar is disabled, so treat any number of "*" as one
-        reStr += capture ? ".*" : "(.*)";
+        reStr += capture ? "(.*)" : ".*";
       } else {
         // globstar is enabled, so determine if this is a globstar segment
         var isGlobstar = starCount > 1                      // multiple "*"'s

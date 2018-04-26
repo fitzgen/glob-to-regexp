@@ -13,6 +13,10 @@ module.exports = function (glob, opts) {
   // matching, etc.
   var extended = opts ? !!opts.extended : false;
 
+  // Whether or not to capture those stars, it means wrapping them with parentheses
+  // It's not necessary if globstart is turned on
+  var capture = opts ? !!opts.capture : false;
+
   // When globstar is _false_ (default), '/foo/*' is translated a regexp like
   // '^\/foo\/.*$' which will match any string beginning with '/foo/'
   // When globstar is _true_, '/foo/*' is translated to regexp like
@@ -97,7 +101,7 @@ module.exports = function (glob, opts) {
 
       if (!globstar) {
         // globstar is disabled, so treat any number of "*" as one
-        reStr += ".*";
+        reStr += capture ? ".*" : "(.*)";
       } else {
         // globstar is enabled, so determine if this is a globstar segment
         var isGlobstar = starCount > 1                      // multiple "*"'s

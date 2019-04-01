@@ -1,6 +1,6 @@
 {
   "name": "glob-to-regexp",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Convert globs to regular expressions",
   "main": "index.js",
   "scripts": {
